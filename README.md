@@ -16,3 +16,5 @@ La deuxième page affichera une annonce avec son titre, sa date d'ajout, sa desc
 Vous prendrez exemple sur la page https://candidat.pole-emploi.fr/offres/recherche/detail/129FQZF pour en déduire les informations à modéliser dans votre basse de données
 
 Votre site proposera aussi une interface backend permettant de faire le CRUD de votre base de données (ajout, modification et supression d'une annonce + une page permettant de visualiser les réponses faites à une annonce)
+
+# Lien vers la Table: https://dbdiagram.io/d/6225fcfc61d06e6eadb7171a
