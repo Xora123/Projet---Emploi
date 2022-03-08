@@ -10,7 +10,7 @@ class ArticleController extends AbstractController
 {
     public function index()
     {
-        $id = $_GET['id'];
+        $id = $_GET['id'];  
         $articleModel = new ArticleModel();
 
         $articles = $articleModel->findById($id);
@@ -19,6 +19,7 @@ class ArticleController extends AbstractController
         // traiter des formulaire
         // vérifier que l'utilisateur a les droits
         // etc...
+        $articles = $articles[0];
         $this->render('article.php', [
             'articles' => $articles
         ]);

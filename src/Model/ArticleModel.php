@@ -34,7 +34,7 @@ class ArticleModel{
 #Pour trouver une question par son ID
 public function findById($id){
         
-    $sql = 'SELECT * FROM ' . self::TABLE_NAME . ' WHERE id = '.$id;
+    $sql = 'SELECT * FROM ' . self::TABLE_NAME . ' WHERE id_article = '.$id;
 
     $pdoStatement = $this->pdo->query($sql);
     

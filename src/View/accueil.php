@@ -118,9 +118,8 @@ $db->Connect();
     <small><?= $accueil->getDepartement();?></small>
     <small><?=$accueil->getNumeroDepartement();?></small>
     <div class="d-flex w-300 justify-content-end">
-        <!-- <button onclick="location.href='?page=article&<?=$accueil->getId();?>'">Voir plus</button> -->
-        <button onclick="location.href='?page=article&<?=$accueil->getId();?>'" >Voir plus</button>
-        <!-- <a action="?page=article&<?=$accueil->getId();?>" class=""></a> -->
+    <a href="?page=article&id=<?=$accueil->getId();?>" class="btn btn-primary">
+        <!-- <button onclick="location.href='?page=article&id=<?=$accueil->getId();?>'" >Voir plus</button> -->
     </div>
   </a>
   
