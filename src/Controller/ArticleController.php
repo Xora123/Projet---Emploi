@@ -10,9 +10,10 @@ class ArticleController extends AbstractController
 {
     public function index()
     {
+        $id = $_GET['id'];
         $articleModel = new ArticleModel();
 
-        $articles = $articleModel->findAll();
+        $articles = $articleModel->findById($id);
         // ma logique métier ici
         // exemple récupérer des données en BDD
         // traiter des formulaire
