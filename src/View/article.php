@@ -1,52 +1,16 @@
 <?php
+namespace App;
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-class Database
-{   
-    private $config;
-    private $pdo;
+require 'vendor/autoload.php';
 
-    /**
-     * THE CONSTRUCTOR
-     */
-    public function __construct()
-    {
-        $this->getconfig();
-        $this->connect();
-    }
+//connexion base de donnée
+use App\Database;
 
-    /**
-     * Retrieve the config from the config.ini file
-     */
-    private function getconfig()
-    {
-        // On récupere les identifiants de la Base de données
-        $config = parse_ini_file('config.ini', true);
-        // Erreur pour vor si le fichier n'existe pas 
-        if (!$config) {
-            throw new \Exception("Le fichier config.ini n'existe pas");
-        }
-        $this->config = $config;
-    }
-
-    /**
-     * Connect to the DataBase
-     */
-    private function connect()
-    {
-        $dbh ='';
-        // Connexion a la base de données 
-        try {
-            $dbh = new PDO('mysql:host=' . $this->config["DB_HOST"] . ';dbname=' . $this->config["DB_NAME"], $this->config["DB_USERNAME"], $this->config["DB_PASSWORD"]);
-            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo 'Échec lors de la connexion : ' . $e->getMessage();
-        }
-        $this->pdo = $dbh;
-    }
-    public function getPDO(){
-        return $this->pdo;
-    }
-}
+$db = new Database();
+$db->Connect();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,8 +21,8 @@ class Database
     <title>Document</title>
 </head>
 <body>
-<?php foreach ($articles as $article) : ?>
-      <small><?= $article->getDescription_article();?></small>
+<?php foreach ($articles as $article) :?>
+    <p><?= $article->getDepartement_article()?></p>
     <?php endforeach ?>
 
 </body>
