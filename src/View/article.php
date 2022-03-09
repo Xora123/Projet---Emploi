@@ -11,6 +11,8 @@ use App\Database;
 
 $db = new Database();
 $db->Connect();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en" class="html">
@@ -71,7 +73,8 @@ $db->Connect();
   <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
     <div class="d-flex w-300 justify-content-between">
       <h5 class="mb-3"><?= $article->getTitle() ?></h5>
-      <small><?= $article->getHeure_publication_article();?></small>
+      <small>Date de publucation : <?= $article->getDate_publication_article();?></small>
+        <small>Heure de publication :<?= $article->getHeure_publication_article();?></small>
     </div>
     <p class="mb-3"><?= $article->getDescription_article();?></p>
     

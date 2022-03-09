@@ -94,8 +94,9 @@ $db->Connect();
         <div id="offre" class="list-group">
             <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                 <div class="d-flex w-300 justify-content-between">
-                    <h5 class="mb-3"><?= $admin->getTitle() ?></h5>
-                    <small><?= $admin->getHeurePublicationArticle(); ?></small>
+                    <h5 class="mb-4"><?= $admin->getTitle() ?></h5>
+                    <small>Date de publucation : <?= $admin->getDate_publication_article();?></small>
+                    <small>Heure de publication :<?= $admin->getHeurePublicationArticle();?></small>
                 </div>
                 <p class="mb-3"><?= $admin->getDescriptionArticles(); ?></p>
                 <small><?= $admin->getDepartement(); ?></small>

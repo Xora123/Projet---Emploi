@@ -203,4 +203,24 @@ public function findById($id){
 
         return $this;
     }
+
+    /**
+     * Get the value of date_publication_article
+     */ 
+    public function getDate_publication_article()
+    {
+        return $this->date_publication_article;
+    }
+
+    /**
+     * Set the value of date_publication_article
+     *
+     * @return  self
+     */ 
+    public function setDate_publication_article($date_publication_article)
+    {
+        $this->date_publication_article = $date_publication_article;
+
+        return $this;
+    }
 }

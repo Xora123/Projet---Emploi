@@ -36,18 +36,39 @@ class AccueilModel
 
     public function findAll()
     {
+           // On détermine sur quelle page on se trouve
+           if (isset($_GET['page']) && !empty($_GET['page'])) {
+            $currentPage = (int) strip_tags($_GET['page']);
+        } else {
+            $currentPage = 1;
+        }
+        // On détermine le nombre total d'articles
+        $sql = 'SELECT COUNT(*) AS nb_articles FROM `article`;';
 
-        $sql = 'SELECT
-                `id_article`
-                ,`titre_article`
-                ,`description_article`
-                ,`departement_article`
-                ,`numero_departement_article`
-                ,`date_publication_article`
-                ,`heure_publication_article`
-                ,`type`
-                FROM ' . self::TABLE_NAME . '
-                ORDER BY `date_publication_article` DESC LIMIT 0, 5;
+        // On prépare la requête
+        $query = $this->pdo->prepare($sql);
+
+        // On exécute
+        $query->execute();
+
+        // On récupère le nombre d'articles
+        $result = $query->fetch();
+
+        $nbArticles = (int) $result['nb_articles'];
+
+        // On détermine le nombre d'articles par page
+        $parPage = 10;
+
+        // On calcule le nombre de pages total
+        $pages = ceil($nbArticles / $parPage);
+
+        $premier = ($currentPage * $parPage) - $parPage;
+
+        $query->bindValue(':premier', $premier, PDO::PARAM_INT);
+        $query->bindValue(':parpage', $parPage, PDO::PARAM_INT);
+
+
+        $sql = 'SELECT * FROM  `article` ORDER BY `id_article` DESC ;
         ';
 
         $pdoStatement = $this->pdo->query($sql);
@@ -57,50 +78,14 @@ class AccueilModel
 
     public function Page()
     {
-        // On détermine sur quelle page on se trouve
-        if (isset($_GET['page']) && !empty($_GET['page'])) {
-            $currentPage = (int) strip_tags($_GET['page']);
-        } else {
-          
-        }
-        $currentPage = 1;
-        $sql = 'SELECT COUNT(*) AS nb_article FROM `article`';
+     
 
-        $pdoStatement = $this->pdo->query($sql);
-
-        // On prépare la requete
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
-
-        
-        // On récupère le nombre d'articles
-        $result = $pdoStatement->fetch();
-        
-        var_dump($result);
-
-        $nbArticles = (int) $result['nb_article'];
-
-        // On détermine le nombre d'articles par page
-        $parPage = 10;
-
-        // On calcule le nombre de pages total
-        $pages = ceil($nbArticles / $parPage);
-
-        // Calcul du 1er article de la page
-        $premier = ($currentPage * $parPage) - $parPage;
-        $sql = 'SELECT * FROM `article` ORDER BY `date_publication_article` DESC LIMIT :premier, :parpage;';
+        $sql = 'SELECT * FROM `article` ORDER BY `id_article` DESC LIMIT :premier, :parpage;';
 
         // On prépare la requête
         $query = $this->pdo->prepare($sql);
 
-        $query->bindValue(':premier', $premier, PDO::PARAM_INT);
-        $query->bindValue(':parpage', $parPage, PDO::PARAM_INT);
 
-        // On exécute
-        $query->execute();
-
-        // On récupère les valeurs dans un tableau associatif
-        $articles = $query->fetchAll(PDO::FETCH_ASSOC);
     }
     /**
      * Get the value of id
@@ -258,6 +243,46 @@ class AccueilModel
     public function setType_article($type_article)
     {
         $this->id_article = $type_article;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of date_publication_article
+     *
+     * @return  self
+     */
+    public function setDate_publication_article($date_publication_article)
+    {
+        $this->date_publication_article = $date_publication_article;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of date_publication_article
+     */
+    public function getDate_publication_article()
+    {
+        return $this->date_publication_article;
+    }
+
+    /**
+     * Get the value of pdo
+     */
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
+
+    /**
+     * Set the value of pdo
+     *
+     * @return  self
+     */
+    public function setPdo($pdo)
+    {
+        $this->pdo = $pdo;
 
         return $this;
     }

@@ -46,7 +46,7 @@ class AdminModel
                 ,`heure_publication_article`
                 ,`Type` as type
                 FROM ' . self::TABLE_NAME . '
-                ORDER BY `date_publication_article` DESC LIMIT 0, 5;
+                ORDER BY `date_publication_article` DESC;
         ';
 
         $pdoStatement = $this->pdo->query($sql);
@@ -228,4 +228,24 @@ class AdminModel
 
         return $this;
     } 
+
+    /**
+     * Get the value of date_publication_article
+     */ 
+    public function getDate_publication_article()
+    {
+        return $this->date_publication_article;
+    }
+
+    /**
+     * Set the value of date_publication_article
+     *
+     * @return  self
+     */ 
+    public function setDate_publication_article($date_publication_article)
+    {
+        $this->date_publication_article = $date_publication_article;
+
+        return $this;
+    }
 }

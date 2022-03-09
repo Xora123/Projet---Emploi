@@ -13,15 +13,16 @@ class AccueilController extends AbstractController
         $accueilModel = new AccueilModel();
 
         $accueils = $accueilModel->findAll();
-        $articles = $accueilModel->Page();
         // ma logique métier ici
         // exemple récupérer des données en BDD
         // traiter des formulaire
         // vérifier que l'utilisateur a les droits
         // etc...
+        $articles = new AccueilModel(); 
+        $articles->page();
         $this->render('accueil.php', [
             'accueils' => $accueils,
-            'articles' => $articles
+            'articles' => $articles,
         ]);
     }
 

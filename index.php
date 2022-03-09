@@ -15,28 +15,28 @@ class Application
             'controller' => 'AccueilController',
             'method' => 'index'
         ],
-            'article' => [
-                'controller' => 'ArticleController',
-                'method' => 'index'
-            ],
-            'admin' => [
-                'controller' => 'AdminController',
-                'method' => 'index'
-            ],
-            'delete' => [
-                'controller' => 'AdminController',
-                'method' => 'delete'
-            ],
-            'insert' => [
-                'controller' => 'AdminController',
-                'method' => 'insert'
-            ],
-            'page' => [
-                'controller' => 'AccueilController',
-                'method' => 'index'
-            ],
+        'article' => [
+            'controller' => 'ArticleController',
+            'method' => 'index'
+        ],
+        'admin' => [
+            'controller' => 'AdminController',
+            'method' => 'index'
+        ],
+        'delete' => [
+            'controller' => 'AdminController',
+            'method' => 'delete'
+        ],
+        'insert' => [
+            'controller' => 'AdminController',
+            'method' => 'insert'
+        ],
+        'page' => [
+            'controller' => 'AccueilController',
+            'method' => 'page'
+        ],
     ];
-    
+
     const DEFAULT_ROUTE = 'projets';
 
     private function match($route_name)
@@ -69,7 +69,6 @@ class Application
         // j'appelle la méthode correspondante à la route demandée
         $method_name = $route['method'];
         $controller->$method_name();
-
     }
 }
 
