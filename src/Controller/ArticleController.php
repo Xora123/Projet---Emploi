@@ -11,7 +11,6 @@ class ArticleController extends AbstractController
     public function index()
     {
         $id = $_GET['id']; 
-        var_dump($id) ;
         $articleModel = new ArticleModel();
 
         $articles = $articleModel->findById($id);

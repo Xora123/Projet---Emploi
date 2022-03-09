@@ -21,6 +21,8 @@ class ArticleModel{
     protected $date_publication_article;
 
     protected $heure_publication_article;
+
+    protected $type_article;
     
     
     const TABLE_NAME = 'article';
@@ -63,7 +65,25 @@ public function findById($id){
 
         return $this;
     }
+  /**
+     * Get the value of name
+     */ 
+    public function getTitle()
+    {
+        return $this->titre_article;
+    }
 
+    /**
+     * Set the value of name
+     *
+     * @return  self
+     */ 
+    public function setName(String $titre_article)
+    {
+        $this->titre_article= $titre_article;
+
+        return $this;
+    }
     /**
      * Get the value of pdo
      */ 
@@ -160,6 +180,26 @@ public function findById($id){
     public function setHeure_publication_article($heure_publication_article)
     {
         $this->heure_publication_article = $heure_publication_article;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of id_article
+     */ 
+    public function getType_article()
+    {
+        return $this->type_article;
+    }
+
+    /**
+     * Set the value of id_article
+     *
+     * @return  self
+     */ 
+    public function setType_article($type_article)
+    {
+        $this->id_article = $type_article;
 
         return $this;
     }

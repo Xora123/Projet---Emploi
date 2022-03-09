@@ -19,6 +19,22 @@ class Application
                 'controller' => 'ArticleController',
                 'method' => 'index'
             ],
+            'admin' => [
+                'controller' => 'AdminController',
+                'method' => 'index'
+            ],
+            'delete' => [
+                'controller' => 'AdminController',
+                'method' => 'delete'
+            ],
+            'insert' => [
+                'controller' => 'AdminController',
+                'method' => 'insert'
+            ],
+            'page' => [
+                'controller' => 'AccueilController',
+                'method' => 'index'
+            ],
     ];
     
     const DEFAULT_ROUTE = 'projets';

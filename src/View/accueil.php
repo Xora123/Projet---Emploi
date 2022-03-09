@@ -41,36 +41,16 @@ $db->Connect();
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item">
+                <a class="navbar-item" href="?page=projets">
                     Accueil
                 </a>
 
-                <a class="navbar-item">
-                    Liste des offres
-                </a>
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        Plus
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            A propos
-                        </a>
-                        <a class="navbar-item">
-                            Contact
-                        </a>
-                    </div>
-                </div>
             </div>
 
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a class="button">
-                            <strong>Connexion</strong>
-                        </a>
+                    <a href="?page=admin" class="btn btn-primary">Page Admin</a>
                     </div>
                 </div>
             </div>
@@ -117,16 +97,34 @@ $db->Connect();
     
     <small><?= $accueil->getDepartement();?></small>
     <small><?=$accueil->getNumeroDepartement();?></small>
+    <small><?=$accueil->getType_article();?></small>
     <div class="d-flex w-300 justify-content-end">
-    <a href="?page=article&id=<?=$accueil->getId();?>" class="btn btn-primary">
+    <a href="?page=article&id=<?=$accueil->getId();?>" class="btn btn-primary">Voir plus</a>
         <!-- <button onclick="location.href='?page=article&id=<?=$accueil->getId();?>'" >Voir plus</button> -->
     </div>
   </a>
   
 </div>
-   
-    <?php endforeach ?>
 
+    <?php endforeach ?>
+                <nav>
+                    <ul class="pagination">
+                        <!-- Lien vers la page précédente (désactivé si on se trouve sur la 1ère page) -->
+                        <li class="page-item <?= ($currentPage == 1) ? "disabled" : "" ?>">
+                            <a href="?page=projets<?= $currentPage - 1 ?>" class="page-link">Précédente</a>
+                        </li>
+                        <?php for($page = 1; $page <= $pages; $page++): ?>
+                          <!-- Lien vers chacune des pages (activé si on se trouve sur la page correspondante) -->
+                          <li class="?page-item <?= ($currentPage == $page) ? "active" : "" ?>">
+                                <a href="?page=projets<?= $page ?>" class="page-link"><?= $page ?></a>
+                            </li>
+                        <?php endfor ?>
+                          <!-- Lien vers la page suivante (désactivé si on se trouve sur la dernière page) -->
+                          <li class="page-item <?= ($currentPage == $pages) ? "disabled" : "" ?>">
+                            <a href="?page=projets<?= $currentPage + 1 ?>" class="page-link">Suivante</a>
+                        </li>
+                    </ul>
+                </nav>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
