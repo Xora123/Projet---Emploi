@@ -73,16 +73,18 @@ $db->Connect();
   <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
     <div class="d-flex w-300 justify-content-between">
       <h5 class="mb-3"><?= $article->getTitle() ?></h5>
-      <small>Date de publucation : <?= $article->getDate_publication_article();?></small>
+      <small>Date de publication : <?= $article->getDate_publication_article();?></small>
         <small>Heure de publication :<?= $article->getHeure_publication_article();?></small>
     </div>
     <p class="mb-3"><?= $article->getDescription_article();?></p>
     
     <small><?= $article->getDepartement_article();?></small>
     <small><?=$article->getNumero_departement();?></small>
-    <div class="d-flex w-300 justify-content-end">
-    <a href="?page=article&id=<?=$accueil->getId();?>" class="btn btn-primary">Voir plus</a>
-    </div>
+    <form action="?page=insert_text&id=<?=$article->getId_article();?>" method="post">
+    <p>Postuler pour l'offre : <input type="text" name="reponse" /></p>
+    <input type="hidden" name="post_id" value="<?php $article->getId_article() ?>" />
+    <p><input type="submit" value="OK"></p>
+    </form>
   </a>
 </div>
     <?php endforeach ?>

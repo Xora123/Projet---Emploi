@@ -45,6 +45,13 @@ public function findById($id){
     return $result;
 }
 
+public function insert_text($reponse, $id) {
+    var_dump($id);
+    $sql = "INSERT INTO `type` (`id_offer`,`reponse`) VALUES ('$id', '$reponse')";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+}
+
 
     /**
      * Get the value of id_article

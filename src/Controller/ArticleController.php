@@ -24,6 +24,16 @@ class ArticleController extends AbstractController
         ]);
     }
 
+    public function insert_text(){
+        $id = $_GET['id']; 
+        $reponse = ($_POST["reponse"]);
+
+        $insert = new ArticleModel();
+        $insert->insert_text($reponse, $id);
+        header('Location: ?page=article&id=' .$id);
+    }
+
+
     // public function create()
     // {
     //     $boardModel = new BoardModel();

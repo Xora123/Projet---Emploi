@@ -7,6 +7,9 @@ use App\database\Database;
 
 class AccueilModel
 {
+
+    protected $currentPage;
+
     protected $pdo;
 
     protected $id_article;
@@ -34,14 +37,10 @@ class AccueilModel
         $this->pdo = $database->getPDO();
     }
 
-    public function findAll()
+    public function findAll($currentPage)
     {
-           // On détermine sur quelle page on se trouve
-           if (isset($_GET['page']) && !empty($_GET['page'])) {
-            $currentPage = (int) strip_tags($_GET['page']);
-        } else {
-            $currentPage = 1;
-        }
+
+        var_dump($currentPage);
         // On détermine le nombre total d'articles
         $sql = 'SELECT COUNT(*) AS nb_articles FROM `article`;';
 
@@ -57,35 +56,30 @@ class AccueilModel
         $nbArticles = (int) $result['nb_articles'];
 
         // On détermine le nombre d'articles par page
-        $parPage = 10;
+        $parPage = 2;
 
         // On calcule le nombre de pages total
         $pages = ceil($nbArticles / $parPage);
 
+        var_dump($currentPage);
+        // Calcul du 1er article de la page
         $premier = ($currentPage * $parPage) - $parPage;
 
-        $query->bindValue(':premier', $premier, PDO::PARAM_INT);
-        $query->bindValue(':parpage', $parPage, PDO::PARAM_INT);
 
+        var_dump($premier);
+        $sql = 'SELECT * FROM `article` ORDER BY `id_article` DESC LIMIT :parPage OFFSET :premier';
 
-        $sql = 'SELECT * FROM  `article` ORDER BY `id_article` DESC ;
-        ';
+        $pdoStatement = $this->pdo->prepare($sql);
 
-        $pdoStatement = $this->pdo->query($sql);
+        $pdoStatement->bindValue(':premier', (int) $premier, PDO::PARAM_INT);
+        $pdoStatement->bindValue(':parPage', (int) $parPage, PDO::PARAM_INT);
+
+        // On exécute
+        $pdoStatement->execute();
+
         $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
-        return $result;
-    }
 
-    public function Page()
-    {
-     
-
-        $sql = 'SELECT * FROM `article` ORDER BY `id_article` DESC LIMIT :premier, :parpage;';
-
-        // On prépare la requête
-        $query = $this->pdo->prepare($sql);
-
-
+        return [$result, $pages];
     }
     /**
      * Get the value of id
@@ -193,7 +187,7 @@ class AccueilModel
      */
     public function getDatePublicationArticle()
     {
-        return $this->DatePublicationArticle;
+        return $this->date_publication_article;
     }
 
     /**
@@ -247,42 +241,19 @@ class AccueilModel
         return $this;
     }
 
+    public function getCurrentPage()
+    {
+        return $this->currentPage;
+    }
+
     /**
-     * Set the value of date_publication_article
+     * Set the value of id_article
      *
      * @return  self
      */
-    public function setDate_publication_article($date_publication_article)
+    public function setCurrentPage($currentPage)
     {
-        $this->date_publication_article = $date_publication_article;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of date_publication_article
-     */
-    public function getDate_publication_article()
-    {
-        return $this->date_publication_article;
-    }
-
-    /**
-     * Get the value of pdo
-     */
-    public function getPdo()
-    {
-        return $this->pdo;
-    }
-
-    /**
-     * Set the value of pdo
-     *
-     * @return  self
-     */
-    public function setPdo($pdo)
-    {
-        $this->pdo = $pdo;
+        $this->currentPage = $currentPage;
 
         return $this;
     }

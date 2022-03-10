@@ -31,10 +31,11 @@ class Application
             'controller' => 'AdminController',
             'method' => 'insert'
         ],
-        'page' => [
-            'controller' => 'AccueilController',
-            'method' => 'page'
+        'insert_text' => [
+            'controller' => 'ArticleController',
+            'method' => 'insert_text'
         ],
+        
     ];
 
     const DEFAULT_ROUTE = 'projets';

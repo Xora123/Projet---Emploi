@@ -10,19 +10,27 @@ class AccueilController extends AbstractController
 {
     public function index()
     {
+        // On détermine sur quelle page on se trouve
+        if (isset($_GET['p']) && !empty($_GET['p'])) {
+            $currentPage = (int) strip_tags($_GET['p']);
+        } else {
+            $currentPage = 1;
+        }
+        var_dump($currentPage);
+        
         $accueilModel = new AccueilModel();
 
-        $accueils = $accueilModel->findAll();
+        $accueils = $accueilModel->findAll($currentPage);
         // ma logique métier ici
         // exemple récupérer des données en BDD
         // traiter des formulaire
         // vérifier que l'utilisateur a les droits
         // etc...
-        $articles = new AccueilModel(); 
-        $articles->page();
+        $articles = new AccueilModel();
         $this->render('accueil.php', [
-            'accueils' => $accueils,
-            'articles' => $articles,
+            'accueils' => $accueils[0],
+            'pages' => $accueils[1],
+            'currentPage' => $currentPage
         ]);
     }
 
