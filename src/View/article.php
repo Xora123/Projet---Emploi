@@ -1,5 +1,7 @@
 <?php
+
 namespace App;
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -60,36 +62,37 @@ $db->Connect();
         </div>
     </nav>
 
-    <div id="h1"class="column is-centered">
-    <?php foreach ($articles as $article) : ?>
-        <div class="content">
-            <h1><?= $article->getTitle() ?></h1>
-        </div>
+    <div id="h1" class="column is-centered">
+        <?php foreach ($articles as $article) : ?>
+            <div class="content">
+                <h1><?= $article->getTitle() ?></h1>
+            </div>
     </div>
-  <?php endforeach ?>
+<?php endforeach ?>
 </div>
-    <?php foreach ($articles as $article) : ?>
+<?php foreach ($articles as $article) : ?>
     <div id="offre" class="list-group">
-  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-    <div class="d-flex w-300 justify-content-between">
-      <h5 class="mb-3"><?= $article->getTitle() ?></h5>
-      <small>Date de publication : <?= $article->getDate_publication_article();?></small>
-        <small>Heure de publication :<?= $article->getHeure_publication_article();?></small>
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+            <div class="d-flex w-300 justify-content-between">
+                <h5 class="mb-3"><?= $article->getTitle() ?></h5>
+                <small>Date de publication : <?= $article->getDate_publication_article(); ?></small>
+                <small>Heure de publication :<?= $article->getHeure_publication_article(); ?></small>
+            </div>
+            <p class="mb-3"><?= $article->getDescription_article(); ?></p>
+
+            <small><?= $article->getDepartement_article(); ?></small>
+            <small><?= $article->getNumero_departement(); ?></small>
+            <form action="?page=insert_text&id=<?= $article->getId_article(); ?>" method="post">
+                <p>Postuler pour l'offre : <input type="text" name="reponse" /></p>
+                <input type="hidden" name="post_id" value="<?php $article->getId_article() ?>" />
+                <p><input type="submit" value="OK"></p>
+            </form>
+        </a>
     </div>
-    <p class="mb-3"><?= $article->getDescription_article();?></p>
-    
-    <small><?= $article->getDepartement_article();?></small>
-    <small><?=$article->getNumero_departement();?></small>
-    <form action="?page=insert_text&id=<?=$article->getId_article();?>" method="post">
-    <p>Postuler pour l'offre : <input type="text" name="reponse" /></p>
-    <input type="hidden" name="post_id" value="<?php $article->getId_article() ?>" />
-    <p><input type="submit" value="OK"></p>
-    </form>
-  </a>
-</div>
-    <?php endforeach ?>
+<?php endforeach ?>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@popperjs/core@2"></script>
+
 </html>

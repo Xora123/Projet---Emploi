@@ -7,3 +7,28 @@
 #offre{
     margin: 2%;
 }
+
+#button-add{
+
+    margin-left: 47%;
+
+}
+
+form{
+    margin-left:2%;
+    margin-top: 2%;
+    border: 1px solid black;
+    padding: 3%;
+}
+
+#header{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+input{
+    padding: 2%;
+    margin: 2%;
+}
+

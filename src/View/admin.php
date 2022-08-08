@@ -43,7 +43,7 @@ $db->Connect();
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="?page=projets">
+                <a class="navbar-item" href="?page=projets&p=<?php echo $currentPage?>">
                     Accueil
                 </a>
             </div>
@@ -75,7 +75,7 @@ $db->Connect();
             </ul>
         <?php endforeach ?>
     </div>
-    
+
     <div class="dropdown">
         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             Type
@@ -95,52 +95,65 @@ $db->Connect();
             <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                 <div class="d-flex w-300 justify-content-between">
                     <h5 class="mb-4"><?= $admin->getTitle() ?></h5>
-                    <small>Date de publication : <?= $admin->getDate_publication_article();?></small>
-                    <small>Heure de publication :<?= $admin->getHeurePublicationArticle();?></small>
+                    <small>Date de publication : <?= $admin->getDate_publication_article(); ?></small>
+                    <small>Heure de publication :<?= $admin->getHeurePublicationArticle(); ?></small>
+                    <small>Validité de l'offre :<?= $admin->getDate_valide(); ?></small>
                 </div>
                 <p class="mb-3"><?= $admin->getDescriptionArticles(); ?></p>
                 <small><?= $admin->getDepartement(); ?></small>
                 <small><?= $admin->getNumeroDepartement(); ?></small>
-                <small><?= $admin->getType(); ?></small>
-                <button onclick="location.href='?page=delete&id=<?=$admin->getId();?>'" >Supprimer</button>
+                <div>
+                    <small><?= $admin->getType(); ?></small>
+                </div>
+                <div>
+
+                </div>
                 <div class="d-flex w-300 justify-content-end">
-                    <a href="?page=article&id=<?= $admin->getId(); ?>" class="btn btn-primary">Voir plus</a>
+                    <button onclick="location.href='?page=delete&id=<?= $admin->getId(); ?>'">Supprimer</button>
+                    <button onclick="location.href='?page=hide&id=<?= $admin->getId(); ?>&hide=<?= $admin->getHide(); ?>'">Afficher/cacher</button>
+                    <a href="?page=article&id=<?= $admin->getId(); ?>" id="btn-voir" class="btn btn-primary">Voir plus</a>
                 </div>
 
             </a>
+        </div>
+        <?php
+    endforeach ?>
+    <script type="text/javascript">
+        function bascule(id) {
+            if (document.getElementById(id).style.visibility == "hidden")
+                document.getElementById(id).style.visibility = "visible";
+            else document.getElementById(id).style.visibility = "hidden";
+        }
+    </script>
+    </style>
+    </head>
+
+    <button id="button-add" class="btn btn-primary" onclick="bascule('header')">Ajouter une offre</button>
+
+    <div id="header" style="visibility: hidden;">
+        <form action="?page=insert" method="post">
+            <p>Titre de l'article</p>
+            <input type="text" name="nom" />
+            <p>Description</p> <input type="textarea" name="description" />
+            <p>Departement de l'offre</p><input type="text" name="offre" />
+            <p>Numéro de Departement</p> <input type="number" name="numero" />
+            <p>Date de publication</p> <input type="date" name="date" />
+            <p>Heure de publication</p> <input type="time" name="heure" />
+            <p>Date de validité de l'offre <input type="date" name="date_valide" /></p>
+            <p>Type d'offre</p>
+            <select name="Type" id="cars" multiple>
+                <option name="Type" value="cdi">CDI</option>
+                <option name="Type" value="CDD">CDD</option>
+                <option name="Type" value="Alternance">Alternance</option>
+                <option name="Type" value="Interim">Interim</option>
+            </select>
+            <p style="margin-left: 2%;"><input type="submit" value="Envoyé"></p>
+        </form>
     </div>
- <?php endforeach ?>
- <script type="text/javascript"> 
-function bascule(id) 
-{ 
-	if (document.getElementById(id).style.visibility == "hidden")
-			document.getElementById(id).style.visibility = "visible"; 
-	else	document.getElementById(id).style.visibility = "hidden"; 
-} 
-</script>  
-</style> 
-</head> 
- 
-<button class="btn btn-primary" onclick="bascule('header')" >Ajouter une offre</button>
- 
-<div id="header">
-<form action="?page=insert" method="post">
- <p>Titre de l'article : <input type="text" name="nom" /></p>
- <p>Description : <input type="text" name="description" /></p>
- <p>Departement de l'offre<input type="text" name="offre" /></p>
- <p>Numéro de Departement : <input type="number" name="numero" /></p>
- <p>Date : <input type="date" name="date" /></p>
- <p>Heure : <input type="time" name="heure" /></p>
- <label for="Type">Type:</label>
-<select name="Type" id="cars" multiple>
-  <option name="Type" value="cdi">CDI</option>
-  <option name="Type" value="CDD">CDD</option>
-  <option name="Type" value="Alternance">Alternance</option>
-  <option name="Type" value="Interim">Interim</option>
-</select>
- <p><input type="submit" value="OK"></p>
-</form>
-</div>
+
+
+
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

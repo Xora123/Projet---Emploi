@@ -26,7 +26,12 @@ class AccueilModel
 
     protected $heure_publication_article;
 
+    protected $date_valide;
+
     protected $type_article;
+
+    protected $hide;
+
 
 
     const TABLE_NAME = 'article';
@@ -37,12 +42,11 @@ class AccueilModel
         $this->pdo = $database->getPDO();
     }
 
-    public function findAll($currentPage)
+    // fonction pour la tabulation 
+    public function findAll($currentPage, $date1, $date2, $search, $type)
     {
-
-        var_dump($currentPage);
-        // On détermine le nombre total d'articles
-        $sql = 'SELECT COUNT(*) AS nb_articles FROM `article`;';
+        // // On détermine le nombre total d'articles
+        $sql = 'SELECT COUNT(*) AS nb_articles FROM `article` WHERE `hide` = "1"';
 
         // On prépare la requête
         $query = $this->pdo->prepare($sql);
@@ -56,29 +60,55 @@ class AccueilModel
         $nbArticles = (int) $result['nb_articles'];
 
         // On détermine le nombre d'articles par page
-        $parPage = 2;
+        $parPage = 3;
 
         // On calcule le nombre de pages total
         $pages = ceil($nbArticles / $parPage);
 
-        var_dump($currentPage);
+
         // Calcul du 1er article de la page
         $premier = ($currentPage * $parPage) - $parPage;
 
 
-        var_dump($premier);
-        $sql = 'SELECT * FROM `article` ORDER BY `id_article` DESC LIMIT :parPage OFFSET :premier';
+        $sql = "SELECT * FROM `article` WHERE `hide` = '1' ";
+
+        if (isset($date1) & isset($date2)) {
+            $sql .= 'AND WHERE date(`date_publication_article`) BETWEEN :date1 AND :date2';
+        }
+        if (isset($search)) {
+            $sql .= 'AND `titre_article` LIKE :search';
+        }
+        if (isset($type)) {
+
+            $sql .= 'AND `Type` LIKE :type';
+        }
+        if ($premier != null) {
+            $sql .= 'AND ORDER BY `id_article` DESC LIMIT :parPage OFFSET :premier';
+        }
+
+
 
         $pdoStatement = $this->pdo->prepare($sql);
 
-        $pdoStatement->bindValue(':premier', (int) $premier, PDO::PARAM_INT);
-        $pdoStatement->bindValue(':parPage', (int) $parPage, PDO::PARAM_INT);
+        if (isset($date1) & isset($date2)) {
+            $pdoStatement->bindValue(':date1', $date1);
+            $pdoStatement->bindValue(':date2', $date2);
+        }
+        if (isset($search)) {
+            $pdoStatement->bindValue(':search', $search);
+        }
+        if ($type != null) {
+            $pdoStatement->bindValue(':type', $type);
+        }
+        if ($premier != null) {
+            $pdoStatement->bindValue(':premier', (int) $premier, PDO::PARAM_INT);
+            $pdoStatement->bindValue(':parPage', (int) $parPage, PDO::PARAM_INT);
+        }
 
-        // On exécute
+        echo $sql;
         $pdoStatement->execute();
 
         $result = $pdoStatement->fetchAll(PDO::FETCH_CLASS, self::class);
-
         return [$result, $pages];
     }
     /**
@@ -254,6 +284,46 @@ class AccueilModel
     public function setCurrentPage($currentPage)
     {
         $this->currentPage = $currentPage;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of date_valide
+     */
+    public function getDate_valide()
+    {
+        return $this->date_valide;
+    }
+
+    /**
+     * Set the value of date_valide
+     *
+     * @return  self
+     */
+    public function setDate_valide($date_valide)
+    {
+        $this->date_valide = $date_valide;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of hide
+     */
+    public function getHide()
+    {
+        return $this->hide;
+    }
+
+    /**
+     * Set the value of hide
+     *
+     * @return  self
+     */
+    public function setHide($hide)
+    {
+        $this->hide = $hide;
 
         return $this;
     }

@@ -16,37 +16,44 @@ class AccueilController extends AbstractController
         } else {
             $currentPage = 1;
         }
-        var_dump($currentPage);
-        
+
+        $date1 = null;
+        $date2 = null;
+
+        if (isset($_GET['date1']) && !empty($_GET['date2'])) {
+
+            $date1 = date("Y-m-d", strtotime($_GET['date1']));
+
+            $date2 = date("Y-m-d", strtotime($_GET['date2']));
+        }
+
+        $search = null;
+
+        if (isset($_GET['search'])) {
+
+            $search = $_GET['search'];
+        }
+
+        $type = null;
+
+        if (isset($_GET['type'])) {
+
+            $type = $_GET['type'];
+        }
+
         $accueilModel = new AccueilModel();
 
-        $accueils = $accueilModel->findAll($currentPage);
-        // ma logique métier ici
-        // exemple récupérer des données en BDD
-        // traiter des formulaire
-        // vérifier que l'utilisateur a les droits
-        // etc...
+        $accueils = $accueilModel->findAll($currentPage, $date1, $date2, $search, $type);
+
         $articles = new AccueilModel();
         $this->render('accueil.php', [
             'accueils' => $accueils[0],
             'pages' => $accueils[1],
-            'currentPage' => $currentPage
+            'currentPage' => $currentPage,
+            'date1' => $date1,
+            'date2' => $date2,
+            'search' => $search,
+            'type' => $type,
         ]);
     }
-
-    // public function create()
-    // {
-    //     $boardModel = new BoardModel();
-
-    //     // je récupère le name depuis le formulaire
-    //     $board_name = trim($_POST['board_name']);
-
-    //     if (!empty($board_name)) {
-    //         // je crée un board
-    //         $boardModel = new BoardModel();
-    //         $board_id = $boardModel->create($board_name);
-    //     }
-    //     header('Location:http://localhost/kanban/Projet_Kanban/');
-    //     exit();
-    // }
 }

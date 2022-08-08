@@ -22,6 +22,8 @@ class ArticleModel{
 
     protected $heure_publication_article;
 
+    protected $date_valide;
+
     protected $type_article;
     
     
@@ -46,11 +48,11 @@ public function findById($id){
 }
 
 public function insert_text($reponse, $id) {
-    var_dump($id);
     $sql = "INSERT INTO `type` (`id_offer`,`reponse`) VALUES ('$id', '$reponse')";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute();
 }
+
 
 
     /**
@@ -227,6 +229,26 @@ public function insert_text($reponse, $id) {
     public function setDate_publication_article($date_publication_article)
     {
         $this->date_publication_article = $date_publication_article;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of date_valide
+     */ 
+    public function getDate_valide()
+    {
+        return $this->date_valide;
+    }
+
+    /**
+     * Set the value of date_valide
+     *
+     * @return  self
+     */ 
+    public function setDate_valide($date_valide)
+    {
+        $this->date_valide = $date_valide;
 
         return $this;
     }

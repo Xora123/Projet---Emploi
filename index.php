@@ -15,9 +15,17 @@ class Application
             'controller' => 'AccueilController',
             'method' => 'index'
         ],
+        'tri' => [
+            'controller' => 'AccueilController',
+            'method' => 'tri'
+        ],
         'article' => [
             'controller' => 'ArticleController',
             'method' => 'index'
+        ],
+        'hide' => [
+            'controller' => 'AdminController',
+            'method' => 'hide'
         ],
         'admin' => [
             'controller' => 'AdminController',

@@ -13,49 +13,54 @@ class AdminController extends AbstractController
         $adminModel = new AdminModel();
         $admins = $adminModel->findAll();
 
+          // On détermine sur quelle page on se trouve
+          if (isset($_GET['p']) && !empty($_GET['p'])) {
+            $currentPage = (int) strip_tags($_GET['p']);
+        } else {
+            $currentPage = 1;
+        }
         // ma logique métier ici
         // exemple récupérer des données en BDD
         // traiter des formulaire
         // vérifier que l'utilisateur a les droits
         // etc...
         $this->render('admin.php', [
-            'admins' => $admins
+            'admins' => $admins,
+            'currentPage' => $currentPage
         ]);
     }
-    public function delete(){
+    public function delete()
+    {
         $id = $_GET["id"];
-        $delete = new AdminModel(); 
+        $delete = new AdminModel();
         $delete->delete($id);
         header('Location: ?page=admin');
-        }
-    public function insert(){
-        
+    }
+
+    public function hide()
+    {
+        $id = $_GET["id"];
+        $hide =$_GET["hide"];
+        $hidden = new AdminModel();
+        $hidden->hide($hide, $id);
+        header('Location: ?page=admin');
+    }
+
+    public function insert()
+    {
+
         $nom = ($_POST["nom"]);
         $description = ($_POST["description"]);
         $offre =  ($_POST["offre"]);
         $numero = ($_POST["numero"]);
         $date = ($_POST["date"]);
         $heure = ($_POST["heure"]);
+        $date_valide = ($_POST["date_valide"]);
         $type = ($_POST["Type"]);
 
         $insert = new AdminModel();
-        $insert->insert($nom, $description, $offre, $numero, $date, $heure, $type);
+        $insert->insert($nom, $description, $offre, $numero, $date, $heure, $date_valide, $type);
         header('Location: ?page=admin');
     }
 
-    // public function create()
-    // {
-    //     $boardModel = new BoardModel();
-
-    //     // je récupère le name depuis le formulaire
-    //     $board_name = trim($_POST['board_name']);
-
-    //     if (!empty($board_name)) {
-    //         // je crée un board
-    //         $boardModel = new BoardModel();
-    //         $board_id = $boardModel->create($board_name);
-    //     }
-    //     header('Location:http://localhost/kanban/Projet_Kanban/');
-    //     exit();
-    // }
 }
